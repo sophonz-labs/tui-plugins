@@ -1,0 +1,34 @@
+{
+  "v": 1,
+  "name": "gh-prs",
+  "description": "Pull requests of the repository the pane is in, with gh.",
+  "homepage": "https://cli.github.com",
+  "requires": ["gh"],
+  "views": [
+    {
+      "name": "prs",
+      "title": "Pull requests",
+      "run": ["gh", "pr", "list", "--limit", "50", "--json", "number,title,author,headRefName,isDraft,updatedAt"],
+      "format": "json",
+      "columns": [
+        { "title": "#", "field": "number" },
+        { "field": "title" },
+        { "title": "AUTHOR", "field": "author.login" },
+        { "title": "BRANCH", "field": "headRefName" },
+        { "title": "DRAFT", "field": "isDraft" },
+        { "title": "UPDATED", "field": "updatedAt" }
+      ],
+      "id": "number",
+      "refresh": "60s",
+      "timeout": "20s",
+      "cwd": "pane"
+    }
+  ],
+  "actions": [
+    { "key": "P", "title": "pull requests", "scopes": ["panes", "windows"], "open": "prs" },
+    { "key": "o", "title": "open in browser", "scopes": ["prs"], "run": ["gh", "pr", "view", "{number}", "--web"], "cwd": "pane" },
+    { "key": "d", "title": "diff", "scopes": ["prs"], "run": ["sh", "-c", "gh pr diff \"$1\" --color=always | less -R", "sh", "{number}"], "mode": "popup", "cwd": "pane" },
+    { "key": "c", "title": "checks", "scopes": ["prs"], "run": ["gh", "pr", "checks", "{number}", "--watch"], "mode": "popup", "wait": true, "cwd": "pane" },
+    { "key": "C", "title": "check out", "scopes": ["prs"], "run": ["gh", "pr", "checkout", "{number}"], "confirm": true, "cwd": "pane" }
+  ]
+}

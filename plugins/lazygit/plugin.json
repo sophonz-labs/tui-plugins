@@ -1,0 +1,13 @@
+{
+  "v": 1,
+  "name": "lazygit",
+  "description": "lazygit in the pane's directory, with the whole terminal.",
+  "homepage": "https://github.com/jesseduffield/lazygit",
+  "requires": ["lazygit"],
+  "actions": [
+    { "key": "L", "title": "lazygit", "scopes": ["panes", "windows", "sessions"], "run": ["lazygit"], "mode": "foreground", "cwd": "pane" }
+  ],
+  "commands": [
+    { "name": "lazygit", "title": "lazygit in the pane's directory", "run": ["lazygit", "{args}"], "mode": "foreground", "cwd": "pane" }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "v": 1,
+  "name": "docker-ps",
+  "description": "Running containers, their logs and a shell in them.",
+  "homepage": "https://docs.docker.com/reference/cli/docker/",
+  "requires": ["docker"],
+  "views": [
+    {
+      "name": "containers",
+      "title": "Containers",
+      "run": ["docker", "ps", "--format", "json"],
+      "format": "json",
+      "columns": [
+        { "field": "ID" },
+        { "title": "NAME", "field": "Names" },
+        { "field": "Image" },
+        { "field": "Status" },
+        { "field": "Ports" }
+      ],
+      "id": "ID",
+      "refresh": "5s"
+    }
+  ],
+  "actions": [
+    { "key": "L", "title": "logs", "scopes": ["containers"], "run": ["docker", "logs", "--follow", "--tail", "200", "{ID}"], "mode": "popup" },
+    { "key": "e", "title": "shell", "scopes": ["containers"], "run": ["docker", "exec", "-it", "{ID}", "sh"], "mode": "foreground" },
+    { "key": "i", "title": "inspect", "scopes": ["containers"], "run": ["sh", "-c", "docker inspect \"$1\" | less", "sh", "{ID}"], "mode": "popup" },
+    { "key": "S", "title": "stop", "scopes": ["containers"], "run": ["docker", "stop", "{ID}"], "confirm": true }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "name": "gh-runs",
+  "description": "GitHub Actions runs of the repository the pane is in, with gh.",
+  "homepage": "https://cli.github.com",
+  "requires": ["gh"],
+  "views": [
+    {
+      "name": "gh-runs",
+      "title": "Workflow runs",
+      "run": ["gh", "run", "list", "--limit", "30", "--json", "databaseId,workflowName,headBranch,event,status,conclusion,createdAt"],
+      "format": "json",
+      "columns": [
+        { "title": "ID", "field": "databaseId" },
+        { "title": "WORKFLOW", "field": "workflowName" },
+        { "title": "BRANCH", "field": "headBranch" },
+        { "field": "event" },
+        { "field": "status" },
+        { "field": "conclusion" },
+        { "title": "STARTED", "field": "createdAt" }
+      ],
+      "id": "databaseId",
+      "refresh": "15s",
+      "timeout": "20s",
+      "cwd": "pane"
+    }
+  ],
+  "actions": [
+    { "key": "A", "title": "workflow runs", "scopes": ["panes", "windows"], "open": "gh-runs" },
+    { "key": "w", "title": "watch", "scopes": ["gh-runs"], "run": ["gh", "run", "watch", "{databaseId}"], "mode": "popup", "wait": true, "cwd": "pane" },
+    { "key": "o", "title": "open in browser", "scopes": ["gh-runs"], "run": ["gh", "run", "view", "{databaseId}", "--web"], "cwd": "pane" },
+    { "key": "L", "title": "failed logs", "scopes": ["gh-runs"], "run": ["sh", "-c", "gh run view \"$1\" --log-failed | less -R", "sh", "{databaseId}"], "mode": "popup", "cwd": "pane" },
+    { "key": "r", "title": "rerun failed", "scopes": ["gh-runs"], "run": ["gh", "run", "rerun", "{databaseId}", "--failed"], "confirm": true, "cwd": "pane" }
+  ]
+}

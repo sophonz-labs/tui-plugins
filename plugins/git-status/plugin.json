@@ -1,0 +1,27 @@
+{
+  "v": 1,
+  "name": "git-status",
+  "description": "git status of the pane's directory: diff a file, stage it.",
+  "requires": ["git"],
+  "views": [
+    {
+      "name": "git-status",
+      "title": "git status",
+      "run": ["sh", "-c", "printf 'status\\tpath\\n'; git status --porcelain=v1 | sed 's/^\\(..\\) /\\1\\t/'"],
+      "format": "tsv",
+      "columns": [
+        { "title": "ST", "field": "status" },
+        { "title": "PATH", "field": "path" }
+      ],
+      "id": "path",
+      "refresh": "5s",
+      "cwd": "pane"
+    }
+  ],
+  "actions": [
+    { "key": "S", "title": "git status", "scopes": ["panes", "windows"], "open": "git-status" },
+    { "key": "d", "title": "diff", "scopes": ["git-status"], "run": ["sh", "-c", "git diff --color=always HEAD -- \"$1\" | less -R", "sh", "{path}"], "mode": "popup", "cwd": "pane" },
+    { "key": "a", "title": "stage", "scopes": ["git-status"], "run": ["git", "add", "--", "{path}"], "cwd": "pane" },
+    { "key": "u", "title": "unstage", "scopes": ["git-status"], "run": ["git", "restore", "--staged", "--", "{path}"], "cwd": "pane" }
+  ]
+}

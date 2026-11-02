@@ -1,0 +1,24 @@
+{
+  "v": 1,
+  "name": "kubectl-pods",
+  "description": "Pods in kubectl's current context and namespace: logs, describe, exec.",
+  "homepage": "https://kubernetes.io/docs/reference/kubectl/",
+  "requires": ["kubectl"],
+  "views": [
+    {
+      "name": "pods",
+      "title": "Pods",
+      "run": ["kubectl", "get", "pods", "-o", "jsonpath=name\tphase\trestarts\tnode\tstarted\n{range .items[*]}{.metadata.name}\t{.status.phase}\t{.status.containerStatuses[0].restartCount}\t{.spec.nodeName}\t{.status.startTime}\n{{end}"],
+      "format": "tsv",
+      "id": "name",
+      "refresh": "5s",
+      "timeout": "15s"
+    }
+  ],
+  "actions": [
+    { "key": "L", "title": "logs", "scopes": ["pods"], "run": ["kubectl", "logs", "--follow", "--tail=200", "{name}"], "mode": "popup" },
+    { "key": "d", "title": "describe", "scopes": ["pods"], "run": ["sh", "-c", "kubectl describe pod \"$1\" | less", "sh", "{name}"], "mode": "popup" },
+    { "key": "e", "title": "shell", "scopes": ["pods"], "run": ["kubectl", "exec", "-it", "{name}", "--", "sh"], "mode": "foreground" },
+    { "key": "D", "title": "delete", "scopes": ["pods"], "run": ["kubectl", "delete", "pod", "{name}"], "confirm": true }
+  ]
+}
