@@ -92,7 +92,7 @@ An action is a key on the rows of some views.
 | `open` | `run` or `open` | A plugin view to open, with the row's tmux placeholders (for `cwd: pane`). |
 | `mode`, `confirm`, `wait`, `cwd` | | As in commands below. |
 
-Reserved, on every view, in every tool: `j k g G h l q / : ? enter esc ctrl-b ctrl-f ctrl-r ctrl-c` and the digits `0`-`9`. A manifest that binds one is invalid. Each tool also keeps the keys of its own views (tmui's `n a R s v p ctrl-d`, for one); a plugin key that meets one of those, or a key another plugin already took on that view, is left out and reported in `:ext`. A built-in key always wins.
+Reserved, on every view, in every tool: `j k g G h l q / : ? enter esc ctrl-b ctrl-f ctrl-r ctrl-c ctrl-e` and the digits `0`-`9`. A manifest that binds one is invalid. Each tool also keeps the keys of its own views (tmui's `n a R s v p ctrl-d`, for one); a plugin key that meets one of those, or a key another plugin already took on that view, is left out and reported in `:ext`. A built-in key always wins.
 
 ## commands
 
