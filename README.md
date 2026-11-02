@@ -1,6 +1,6 @@
 # tui-plugins
 
-Plugins for [tmui](https://github.com/sophonz-labs/tmui) (and stui): a CLI's output as a view in the tool's table, and its commands on keys and on the `:` line. Each plugin is one `plugin.json`; [SPEC.md](SPEC.md) is the format.
+Plugins for [tmui](https://github.com/sophonz-labs/tmui) and [stui](https://github.com/sophonz-labs/stui): a CLI's output as a view in the tool's table, and its commands on keys and on the `:` line. Each plugin is one `plugin.json`; [SPEC.md](SPEC.md) is the format.
 
 ## Install
 
@@ -11,7 +11,7 @@ tmui ext list
 tmui ext remove gh-prs
 ```
 
-Install prints every command the plugin will run and asks before writing it to `~/.config/tmui/plugins/<name>/`. Then `:prs` opens the view, and `?` and `:ext` show what each plugin added.
+stui takes the same commands: `stui ext install gh-prs`. Install prints every command the plugin will run and asks before writing it to `~/.config/<tool>/plugins/<name>/`; a plugin put in `~/.config/tui-plugins/<name>/` by hand is read by both. Then `:prs` opens the view, and `?` and `:ext` show what each plugin added. In stui, a key on panes works on the agents view too.
 
 ## Plugins
 
