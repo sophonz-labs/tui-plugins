@@ -8,7 +8,7 @@
     {
       "name": "prs",
       "title": "Pull requests",
-      "run": ["gh", "pr", "list", "--limit", "50", "--json", "number,title,author,headRefName,isDraft,updatedAt"],
+      "run": ["gh", "pr", "list", "--limit", "50", "--json", "number,title,author,headRefName,isDraft,updatedAt,url"],
       "format": "json",
       "columns": [
         { "title": "#", "field": "number" },

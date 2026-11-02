@@ -8,7 +8,7 @@
     {
       "name": "gh-runs",
       "title": "Workflow runs",
-      "run": ["gh", "run", "list", "--limit", "30", "--json", "databaseId,workflowName,headBranch,event,status,conclusion,createdAt"],
+      "run": ["gh", "run", "list", "--limit", "30", "--json", "databaseId,workflowName,headBranch,event,status,conclusion,createdAt,url"],
       "format": "json",
       "columns": [
         { "title": "ID", "field": "databaseId" },
