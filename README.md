@@ -32,7 +32,7 @@ Start from the closest example. Check it the way CI does:
 go run ./check .
 ```
 
-and try it with `tmui ext install ./plugins/<name>`. A pull request adds the plugin's directory and its line in the table above.
+and try it with `tmui ext install ./plugins/<name>`. A pull request adds the plugin's directory and its line in the table above. [CONTRIBUTING.md](CONTRIBUTING.md) has the steps and what review looks for.
 
 ## License
 
