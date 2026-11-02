@@ -9,7 +9,7 @@ A plugin brings another CLI into a terminal UI for tmux: its output as a view, a
 | `$XDG_CONFIG_HOME/<tool>/plugins/<name>/plugin.json` | that tool only (`tmui`, `stui`) |
 | `$XDG_CONFIG_HOME/tui-plugins/<name>/plugin.json` | every tool that implements this spec |
 
-`$XDG_CONFIG_HOME` defaults to `~/.config`. When both have a plugin of one name, the tool's own wins and the shared one is listed as shadowed. `<tool> plugin install` writes to the tool's own directory; put a plugin in the shared one by hand.
+`$XDG_CONFIG_HOME` defaults to `~/.config`. When both have a plugin of one name, the tool's own wins and the shared one is listed as shadowed. `<tool> ext install` writes to the tool's own directory; put a plugin in the shared one by hand.
 
 ## The file
 
@@ -30,7 +30,7 @@ A plugin brings another CLI into a terminal UI for tmux: its output as a view, a
 |---|---|---|
 | `v` | required | `1`. A tool refuses a higher number. |
 | `name` | required | `a-z`, `0-9` and `-`, at most 32, starting with a letter or digit. The directory has the same name. |
-| `description`, `homepage` | | Shown before installing and in `:plugins`. |
+| `description`, `homepage` | | Shown before installing and in `:ext`. |
 | `requires` | | Programs that must be on `PATH`. A missing one is reported; the plugin still loads. |
 | `views`, `actions`, `commands` | at least one | Below. |
 
@@ -92,7 +92,7 @@ An action is a key on the rows of some views.
 | `open` | `run` or `open` | A plugin view to open, with the row's tmux placeholders (for `cwd: pane`). |
 | `mode`, `confirm`, `wait`, `cwd` | | As in commands below. |
 
-Reserved, on every view, in every tool: `j k g G h l q / : ? enter esc ctrl-b ctrl-f ctrl-r ctrl-c` and the digits `0`-`9`. A manifest that binds one is invalid. Each tool also keeps the keys of its own views (tmui's `n a R s v p ctrl-d`, for one); a plugin key that meets one of those, or a key another plugin already took on that view, is left out and reported in `:plugins`. A built-in key always wins.
+Reserved, on every view, in every tool: `j k g G h l q / : ? enter esc ctrl-b ctrl-f ctrl-r ctrl-c` and the digits `0`-`9`. A manifest that binds one is invalid. Each tool also keeps the keys of its own views (tmui's `n a R s v p ctrl-d`, for one); a plugin key that meets one of those, or a key another plugin already took on that view, is left out and reported in `:ext`. A built-in key always wins.
 
 ## commands
 
@@ -137,4 +137,4 @@ On actions scoped only to `sessions`, `windows` and `panes`, only the tmux place
 
 ## Installing
 
-`<tool> plugin install <name | path | url>` reads `https://raw.githubusercontent.com/sophonz-labs/tui-plugins/main/plugins/<name>/plugin.json` for a bare name (`TUI_PLUGINS_REPO` points at a fork), checks it against this spec, prints every command it will run, and asks y/N before writing it. `<tool> plugin list` and `<tool> plugin remove <name>` do what they say. Inside the tool, `:plugins` lists them, what they add, and what was left out.
+`<tool> ext install <name | path | url>` reads `https://raw.githubusercontent.com/sophonz-labs/tui-plugins/main/plugins/<name>/plugin.json` for a bare name (`TUI_PLUGINS_REPO` points at a fork), checks it against this spec, prints every command it will run, and asks y/N before writing it. `<tool> ext list` and `<tool> ext remove <name>` do what they say. Inside the tool, `:ext` lists them, what they add, and what was left out. The command is `ext`, not `plugin`, because `stui plugin` already installs stui's skills for coding agents; both tools use the one name so these docs read the same for each.

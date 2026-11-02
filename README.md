@@ -5,13 +5,13 @@ Plugins for [tmui](https://github.com/sophonz-labs/tmui) (and stui): a CLI's out
 ## Install
 
 ```sh
-tmui plugin install gh-prs      # from this repository's main branch
-tmui plugin install ./my-plugin # a directory with a plugin.json, or a path or URL to one
-tmui plugin list
-tmui plugin remove gh-prs
+tmui ext install gh-prs      # from this repository's main branch
+tmui ext install ./my-plugin # a directory with a plugin.json, or a path or URL to one
+tmui ext list
+tmui ext remove gh-prs
 ```
 
-Install prints every command the plugin will run and asks before writing it to `~/.config/tmui/plugins/<name>/`. Then `:prs` opens the view, and `?` and `:plugins` show what each plugin added.
+Install prints every command the plugin will run and asks before writing it to `~/.config/tmui/plugins/<name>/`. Then `:prs` opens the view, and `?` and `:ext` show what each plugin added.
 
 ## Plugins
 
@@ -32,7 +32,7 @@ Start from the closest example. Check it the way CI does:
 go run ./check .
 ```
 
-and try it with `tmui plugin install ./plugins/<name>`. A pull request adds the plugin's directory and its line in the table above.
+and try it with `tmui ext install ./plugins/<name>`. A pull request adds the plugin's directory and its line in the table above.
 
 ## License
 
