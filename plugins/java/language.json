@@ -1,0 +1,20 @@
+{
+  "v": 1,
+  "name": "java",
+  "description": "Java through Eclipse JDT LS (jdtls). Install it yourself first: on macOS `brew install jdtls`; elsewhere unpack the release from download.eclipse.org/jdtls and put its bin/jdtls on PATH. It needs python3 and the Java its release asks for (jdtls 1.63 needs Java 25).",
+  "homepage": "https://github.com/eclipse-jdtls/eclipse.jdt.ls",
+  "requires": ["java", "python3", "jdtls"],
+  "languages": [
+    {
+      "id": "java",
+      "files": ["*.java"],
+      "rootMarkers": ["pom.xml", "build.gradle", "build.gradle.kts", "settings.gradle", "settings.gradle.kts", ".git"],
+      "lineComment": "//",
+      "grammar": "java"
+    }
+  ],
+  "server": {
+    "command": ["jdtls"],
+    "needs": ["java", "python3"]
+  }
+}

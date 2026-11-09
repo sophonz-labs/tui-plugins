@@ -1,7 +1,8 @@
-// check validates every plugins/<name>/plugin.json against SPEC.md, and
-// the rules a single manifest cannot check: its directory, the views its
-// scopes and opens name, no two plugins taking one : name, and a line for
-// it in README.md.
+// check validates every plugins/<name>/plugin.json against SPEC.md and
+// every plugins/<name>/language.json against SPEC-language.md, and the
+// rules a single file cannot check: its directory, the views its scopes
+// and opens name, no two plugins taking one : name or language id, and a
+// line for it in README.md.
 package main
 
 import (
@@ -11,6 +12,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/sophonz-labs/tui-plugins/check/language"
 	"github.com/sophonz-labs/tui-plugins/check/plugin"
 )
 
@@ -75,6 +77,33 @@ func main() {
 			}
 		}
 	}
+	packs, _ := filepath.Glob(filepath.Join(root, "plugins", "*", "language.json"))
+	sort.Strings(packs)
+	ids := map[string]string{} // language id -> pack
+	for _, f := range packs {
+		data, err := os.ReadFile(f)
+		if err != nil {
+			bad("%s: %v", f, err)
+			continue
+		}
+		p, err := language.Parse(data)
+		if err != nil {
+			bad("%s: %s", f, strings.ReplaceAll(err.Error(), "\n", "\n  "))
+			continue
+		}
+		if dir := filepath.Base(filepath.Dir(f)); dir != p.Name {
+			bad("%s: name %q, directory %q", f, p.Name, dir)
+		}
+		if !strings.Contains(string(readme), "plugins/"+p.Name+")") {
+			bad("%s: README.md does not list it as [..](plugins/%s)", f, p.Name)
+		}
+		for _, l := range p.Languages {
+			if o := ids[l.ID]; o != "" {
+				bad("%s: language %s is served by %s too", f, l.ID, o)
+			}
+			ids[l.ID] = p.Name
+		}
+	}
 	if len(files) == 0 {
 		bad("no plugins/*/plugin.json under %s", root)
 	}
@@ -84,7 +113,7 @@ func main() {
 	if len(errs) > 0 {
 		os.Exit(1)
 	}
-	fmt.Printf("%d plugins ok\n", len(files))
+	fmt.Printf("%d plugins and %d language packs ok\n", len(files), len(packs))
 }
 
 func contains(xs []string, s string) bool {

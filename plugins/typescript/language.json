@@ -1,0 +1,24 @@
+{
+  "v": 1,
+  "name": "typescript",
+  "description": "TypeScript and JavaScript through typescript-language-server, with TypeScript 6 installed beside it for projects that do not have their own.",
+  "homepage": "https://github.com/typescript-language-server/typescript-language-server",
+  "requires": ["node", "npm"],
+  "languages": [
+    {
+      "id": "typescript",
+      "files": ["*.ts", "*.tsx", "*.mts", "*.cts", "*.js", "*.jsx", "*.mjs", "*.cjs"],
+      "rootMarkers": ["tsconfig.json", "package.json"],
+      "lineComment": "//",
+      "grammar": "typescript"
+    }
+  ],
+  "server": {
+    "command": ["typescript-language-server", "--stdio"],
+    "needs": ["node"]
+  },
+  "install": [
+    { "npm": { "package": "typescript-language-server", "version": "6.0.3" } },
+    { "npm": { "package": "typescript", "version": "6.0.3" } }
+  ]
+}

@@ -16,6 +16,10 @@ A plugin is one `plugins/<name>/plugin.json`. [SPEC.md](SPEC.md) is the format; 
    - `confirm: true` on anything that changes or deletes something.
 4. Add one line for it to the Plugins table in [README.md](README.md), linked as `[<name>](plugins/<name>)`. The check fails without it.
 
+## A language pack
+
+A language pack is `plugins/<name>/language.json` ([SPEC-language.md](SPEC-language.md)): a language server for st's editors. Start from `plugins/typescript` (installs with npm) or `plugins/java` (no install, the description says how). `server.command` is argv, `install` versions are exact, and the line goes in README.md's Language packs table. Try it with `st ext install ./plugins/<name>` and open a file of that language in st's editor.
+
 ## Test it before the PR
 
 Run what CI runs, from the repository root:
@@ -23,10 +27,11 @@ Run what CI runs, from the repository root:
 ```sh
 test -z "$(gofmt -l .)"
 go vet ./...
+go test ./...
 go run ./check .
 ```
 
-`go run ./check .` validates every manifest against the spec, and the rules across plugins: the directory matches the name, every scope and `open` names a view that exists, no two plugins take one `:` name, and README.md lists the plugin. It prints `N plugins ok` and exits 0 when it passes.
+`go run ./check .` validates every manifest and language pack against the spec, and the rules across plugins: the directory matches the name, every scope and `open` names a view that exists, no two plugins take one `:` name, and README.md lists the plugin. It prints `N plugins and M language packs ok` and exits 0 when it passes.
 
 Then install it in tmui or stui and use every view, key and command once:
 
