@@ -1,6 +1,6 @@
 # Plugin manifest, v 1
 
-A plugin brings another CLI into a terminal UI for tmux: its output as a view, and its commands on keys and on the `:` line. A plugin is one file, `plugin.json`, and nothing runs that the file does not spell out. This is the contract tmui and stui implement. Draft 2026-11-02.
+A plugin brings another CLI into a terminal UI for tmux: its output as a view, and its commands on keys and on the `:` line. A plugin is one file, `plugin.json`, and nothing runs that the file does not spell out. This is the contract tmui and stui implement. A plugin folder may also hold a `language.json`, a language pack, specified in [SPEC-language.md](SPEC-language.md); tools that implement this spec ignore it. Revised 2026-11-10, rev 1.
 
 ## Where plugins live
 
