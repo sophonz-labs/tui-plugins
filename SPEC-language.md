@@ -70,6 +70,8 @@ A list of steps, run in order after the owner says yes, in the login shell's env
 | `{"npm": {"package": "<name>", "version": "<x.y.z>"}}` | `npm install -g <name>@<x.y.z>` |
 | `{"go": {"module": "<path>", "version": "<vX.Y.Z>"}}` | `go install <path>@<vX.Y.Z>` (the server is then looked for in `~/go/bin` too) |
 
+The step names what to install, never where: the host decides. st installs under its own home, one folder per server (`<home>/tools/lsp/<server>/`, with `npm install -g --prefix <that folder>` and `GOBIN=<that folder>/bin`), looks there before `PATH`, and leaves a global install alone; removing the folder falls back to it.
+
 Versions are exact: `6.0.3`, `v0.20.0`, with an optional pre-release suffix. A range, a tag such as `latest`, or any other kind of step is an error. v 1 has no downloads by URL; a server that ships as an archive (jdtls) has no `install` and says in `description` how to get it.
 
 `install` is a list because a server can need a second package: typescript-language-server needs `typescript` beside it when the project has none.
