@@ -25,6 +25,7 @@ stui takes the same commands: `stui ext install gh-prs`. Install prints every co
 | [kubectl-pods](plugins/kubectl-pods) | kubectl | `:pods` in the current context: `L` logs, `d` describe, `e` shell, `D` delete |
 | [git-status](plugins/git-status) | git | `:git-status` of the pane's directory (`S` on a pane or window): `d` diff, `a` stage, `u` unstage |
 | [lazygit](plugins/lazygit) | lazygit | `L` on a session, window or pane, and `:lazygit`, in the pane's directory |
+| [graphify](plugins/graphify) | graphify, and a graph built in the pane's directory (`:gbuild`) | `:graph-hubs` (`H` on a pane or window): `x` explain, `d` dependents; `:gquery`, `:gexplain`, `:gpath`, `:gaffected`, `:gupdate` |
 
 ## Language packs
 
