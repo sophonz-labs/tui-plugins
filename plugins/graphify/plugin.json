@@ -1,0 +1,32 @@
+{
+  "v": 1,
+  "name": "graphify",
+  "description": "The knowledge graph graphify keeps of the pane's project: its most connected nodes, and query, explain, path and dependents on the : line.",
+  "homepage": "https://docs.graphify.com/open-source/configuration/cli",
+  "requires": ["graphify"],
+  "views": [
+    {
+      "name": "graph-hubs",
+      "title": "Most connected nodes",
+      "run": ["graphify", "god-nodes", "--json", "--top", "50"],
+      "format": "json",
+      "columns": [{ "title": "NODE", "field": "label" }, { "field": "degree" }, { "field": "id" }],
+      "id": "id",
+      "timeout": "30s",
+      "cwd": "pane"
+    }
+  ],
+  "actions": [
+    { "key": "H", "title": "graph hubs", "scopes": ["panes", "windows"], "open": "graph-hubs" },
+    { "key": "x", "title": "explain", "scopes": ["graph-hubs"], "run": ["graphify", "explain", "{label}"], "mode": "popup", "wait": true, "cwd": "pane" },
+    { "key": "d", "title": "dependents", "scopes": ["graph-hubs"], "run": ["graphify", "affected", "{label}"], "mode": "popup", "wait": true, "cwd": "pane" }
+  ],
+  "commands": [
+    { "name": "gquery", "title": "graphify query <text>", "run": ["sh", "-c", "graphify query \"$*\"", "sh", "{args}"], "mode": "popup", "wait": true, "cwd": "pane" },
+    { "name": "gexplain", "title": "graphify explain <node>", "run": ["sh", "-c", "graphify explain \"$*\"", "sh", "{args}"], "mode": "popup", "wait": true, "cwd": "pane" },
+    { "name": "gpath", "title": "graphify path <A> <B>", "run": ["graphify", "path", "{args}"], "mode": "popup", "wait": true, "cwd": "pane" },
+    { "name": "gaffected", "title": "graphify affected <node>", "run": ["sh", "-c", "graphify affected \"$*\"", "sh", "{args}"], "mode": "popup", "wait": true, "cwd": "pane" },
+    { "name": "gupdate", "title": "re-extract changed code (no model)", "run": ["graphify", "update", "."], "cwd": "pane" },
+    { "name": "gbuild", "title": "build the graph from code only (no model)", "run": ["graphify", "extract", ".", "--code-only"], "mode": "foreground", "wait": true, "confirm": true, "cwd": "pane" }
+  ]
+}
